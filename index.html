@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Улов заказов — фриланс-платформа</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#18312b;background:#f5f8f5}
+header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid #e2e9e3}
+.logo{font-size:25px;font-weight:bold;color:#16734b}nav a{margin-left:22px;text-decoration:none;color:#18312b}
+.hero{padding:75px 7%;text-align:center;background:#e4f3e9}.hero h1{font-size:clamp(32px,5vw,54px);margin:0 0 20px}.hero p{font-size:19px;color:#52665b}
+.search{display:flex;max-width:650px;margin:30px auto 0;gap:10px}input{flex:1;min-width:0;padding:16px;border:1px solid #cbd9ce;border-radius:10px;font-size:16px}
+button,.button{padding:15px 22px;border:0;border-radius:10px;background:#16734b;color:white;font-size:16px;cursor:pointer;text-decoration:none}
+section{padding:55px 7%}h2{font-size:30px;margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{padding:24px;background:white;border:1px solid #e2e9e3;border-radius:15px}.card h3{margin-top:0}.muted{color:#718078}.price{color:#16734b;font-weight:bold}
+.cta{text-align:center;background:#18312b;color:white}.cta p{color:#d3e1d8}footer{padding:25px 7%;text-align:center;color:#718078}
+@media(max-width:600px){header{flex-direction:column;gap:15px}nav a{margin:0 8px}.search{flex-direction:column}}
+</style></head>
+<body>
+<header><div class="logo">🎣 Улов заказов</div><nav><a href="#jobs">Заказы</a><a href="#categories">Специализации</a><a href="#about">О платформе</a></nav></header>
+<main>
+<section class="hero"><h1>Лови заказы.<br>Работай свободно.</h1><p>Платформа для фрилансеров, где навыки встречаются с возможностями.</p>
+<div class="search"><input id="search" type="text" placeholder="Какую работу ищешь?"><button onclick="searchJobs()">Найти заказы</button></div></section>
+<section id="categories"><h2>Выбери свою специализацию</h2><div class="grid">
+<div class="card"><h3>🎨 Дизайн</h3><p>Логотипы, баннеры, оформление</p></div><div class="card"><h3>💻 Разработка</h3><p>Сайты, приложения, программирование</p></div>
+<div class="card"><h3>✍️ Тексты</h3><p>Статьи, переводы, описания</p></div><div class="card"><h3>📱 Соцсети</h3><p>Контент, продвижение, SMM</p></div></div></section>
+<section id="jobs"><h2>Примеры заказов</h2><p class="muted">Здесь будут размещаться предложения заказчиков.</p><div class="grid" id="job-list">
+<div class="card job"><h3>Создать логотип для магазина</h3><p>Нужен современный логотип для небольшого бизнеса.</p><p class="price">Бюджет: 300 000 сум</p><p class="muted">Дизайн</p></div>
+<div class="card job"><h3>Оформить страницу Instagram</h3><p>Подготовить обложки и несколько публикаций.</p><p class="price">Бюджет: 200 000 сум</p><p class="muted">Социальные сети</p></div>
+<div class="card job"><h3>Создать простой сайт</h3><p>Одностраничный сайт для услуг специалиста.</p><p class="price">Бюджет: 800 000 сум</p><p class="muted">Разработка</p></div></div><p id="no-results" hidden>Заказы не найдены. Попробуй другой запрос.</p></section>
+<section id="about" class="cta"><h2>Твой следующий заказ начинается здесь</h2><p>Развивай навыки, находи клиентов и зарабатывай на любимом деле.</p><a class="button" href="#jobs">Посмотреть заказы</a></section>
+</main><footer>© 2026 Улов заказов</footer>
+<script>function searchJobs(){const q=document.getElementById("search").value.toLowerCase().trim();let n=0;document.querySelectorAll(".job").forEach(j=>{const m=j.textContent.toLowerCase().includes(q);j.style.display=m?"":"none";if(m)n++});document.getElementById("no-results").hidden=n>0}</script>
+</body></html>
