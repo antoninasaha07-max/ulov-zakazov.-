@@ -29,8 +29,7 @@ h2{font-size:30px;margin-top:0}
 .cta p{color:#d3e1d8}
 footer{padding:25px 7%;text-align:center;color:#718078}
 @media(max-width:600px){header{flex-direction:column}nav a{margin:0 7px}.search{flex-direction:column}.hero{padding:45px 5%}}
-</style>
-</head>
+ =function searchOrders   </head>
 <body>
 <header>
   <div class="logo">🎣 Улов заказов</div>
@@ -49,8 +48,49 @@ footer{padding:25px 7%;text-align:center;color:#718078}
     <button onclick="searchOrders()">Найти</button>
   </div>
 </div>
+<section id="roles">
+  <h2>Добро пожаловать на Улов заказов!</h2>
 
-<section id="categories">
+  <div class="grid">
+    <div class="card">
+      <h3>💼 Я фрилансер</h3>
+      <p>Ищи заказы и зарабатывай!</p>
+      <button onclick="document.getElementById('freelancer').scrollIntoView({behavior:'smooth'})">Войти фрилансеру</button>
+    </div>
+
+    <div class="card">
+      <h3>📋 Я заказчик</h3>
+      <p>Размещай заказы и находи исполнителей!</p>
+      <button onclick="document.getElementById('customer').scrollIntoView({behavior:'smooth'})">Войти заказчику</button>
+    </div>
+
+    <div class="card">
+      <h3>🐱 Кот-помощник</h3>
+      <p>Я помогу разобраться с платформой!</p>
+      <button onclick="alert('Привет! Я кот-помощник Улов заказов! Чем могу помочь?')">Позвать котика</button>
+    </div>
+  </div>
+</section>
+<section id="freelancer">
+  <h2>💼 Регистрация фрилансера</h2>
+  <div class="card">
+    <input type="text" placeholder="Ваше имя">
+    <input type="email" placeholder="Ваш Email">
+    <input type="text" placeholder="Ваша специализация">
+    <button onclick="alert('Анкета фрилансера подготовлена!')">Зарегистрироваться</button>
+  </div>
+</section>
+
+<section id="customer">
+  <h2>📋 Регистрация заказчика</h2>
+  <div class="card">
+    <input type="text" placeholder="Ваше имя">
+    <input type="email" placeholder="Ваш Email">
+    <textarea placeholder="Какой специалист вам нужен?"></textarea>
+    <button onclick="alert('Анкета заказчика подготовлена!')">Зарегистрироваться</button>
+  </div>
+</section>
+  <section id="categories">
   <h2>Выбери свою специализацию</h2>
   <div class="grid">
     <div class="card"><h3>🎨 Дизайн</h3><p>Логотипы, баннеры, оформление</p></div>
