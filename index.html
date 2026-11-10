@@ -1,139 +1,197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Улов заказов — фриланс-платформа</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Улов заказов — фриланс-биржа</title>
+<meta name="description" content="Платформа для заказчиков и фрилансеров">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f8fc;color:#18312b}
-header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #e2e9e3}
-.logo{font-size:24px;font-weight:bold;color:#167346}
-nav a{margin-left:18px;text-decoration:none;color:#18312b}
-.hero{padding:65px 7%;text-align:center;background:#e4f3e9}
-.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 15px}
-.hero p{font-size:18px;color:#526b5b}
-.search{display:flex;max-width:650px;margin:25px auto 0;gap:10px}
-input,select{padding:14px;border:1px solid #cbd8ce;border-radius:9px;font-size:16px;min-width:0}
-.search input{flex:1}
-button{padding:14px 22px;border:0;border-radius:9px;background:#167346;color:white;font-size:16px;cursor:pointer}
-button:hover{background:#105b36}
-section{padding:45px 7%}
-h2{font-size:30px;margin-top:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{padding:22px;background:white;border:1px solid #e2e9e3;border-radius:14px}
-.card h3{margin-top:0}
-.muted{color:#718078}
-.price{font-weight:bold;color:#167346;font-size:18px}
-.cta{text-align:center;background:#18312b;color:white;padding:40px 7%}
-.cta p{color:#d3e1d8}
-footer{padding:25px 7%;text-align:center;color:#718078}
-@media(max-width:600px){header{flex-direction:column}nav a{margin:0 7px}.search{flex-direction:column}.hero{padding:45px 5%}}
- =function searchOrders   </head>
+:root{--green:#176b45;--dark:#18352b;--mint:#e8f4ec;--bg:#f5f8f6;--line:#dce8df;--muted:#65756b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--dark);font:16px/1.5 Arial,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px max(5%,calc((100% - 1120px)/2));background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.logo{font-weight:800;font-size:22px;color:var(--green)}nav{display:flex;gap:18px;flex-wrap:wrap}a{color:var(--green);text-decoration:none}nav a{color:var(--dark)}
+main{max-width:1120px;margin:auto;padding:24px 18px}.hero{background:var(--mint);border-radius:22px;padding:48px 24px;text-align:center}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px}.hero p{max-width:650px;margin:0 auto 22px;color:#50665a}
+.btn,button{border:0;border-radius:10px;background:var(--green);color:#fff;padding:12px 18px;font-weight:700;cursor:pointer}.btn.secondary,button.secondary{background:#e7efe9;color:var(--dark)}button:disabled{opacity:.5;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.section{margin:30px 0}.section h2{margin:0 0 16px}.muted{color:var(--muted)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.role-card{min-height:175px}.role-card h3{margin-top:0}
+input,textarea,select{width:100%;padding:12px;border:1px solid #cbd9ce;border-radius:9px;font:inherit;background:#fff;color:var(--dark)}textarea{min-height:100px;resize:vertical}label{display:block;font-weight:700;margin:12px 0 6px}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.notice{padding:12px 14px;background:#fff7df;border:1px solid #f0dfaa;border-radius:10px;color:#69551a;margin:14px 0}.success{background:#e8f5eb;border-color:#c9e5d0;color:#205a35}.error{background:#fff0ee;border-color:#efc9c3;color:#8b3026}
+.hidden{display:none!important}.order{display:flex;flex-direction:column;gap:8px}.price{font-weight:800;color:var(--green);font-size:18px}.pill{display:inline-block;padding:4px 9px;background:#edf4ef;border-radius:99px;font-size:13px;color:var(--green)}
+#cat{position:fixed;right:18px;bottom:18px;z-index:10}.cat-button{border-radius:50%;width:62px;height:62px;font-size:28px;box-shadow:0 5px 18px #0002}.cat-panel{position:absolute;right:0;bottom:74px;width:min(310px,calc(100vw - 36px));background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 30px #0002}.cat-panel p{margin-top:0}
+footer{text-align:center;padding:28px;color:var(--muted)}
+@media(max-width:650px){header{align-items:flex-start;flex-direction:column}nav{gap:12px}.hero{padding:36px 18px}}
+</style>
+</head>
 <body>
 <header>
   <div class="logo">🎣 Улов заказов</div>
-  <nav>
-    <a href="#orders">Заказы</a>
-    <a href="#categories">Специализации</a>
-    <a href="#about">О платформе</a>
-  </nav>
+  <nav><a href="#orders">Заказы</a><a href="#roles">Регистрация</a><a href="#about">О платформе</a></nav>
+  <div class="row"><button class="secondary" id="loginNav">Войти</button><button id="registerNav">Регистрация</button></div>
 </header>
+<main>
+  <section class="hero">
+    <h1>Лови заказы. Работай свободно.</h1>
+    <p>Биржа, где заказчики находят специалистов, а фрилансеры — интересную работу.</p>
+    <div class="row" style="justify-content:center">
+      <a class="btn" href="#roles">Начать работу</a><a class="btn secondary" href="#orders">Смотреть заказы</a>
+    </div>
+  </section>
 
-<div class="hero">
-  <h1>Лови заказы. Работай свободно.</h1>
-  <p>Платформа для фрилансеров, где можно найти интересную работу и клиентов.</p>
-  <div class="search">
-    <input id="searchInput" type="text" placeholder="Какую работу ищешь?">
-    <button onclick="searchOrders()">Найти</button>
-  </div>
+  <section class="section" id="roles">
+    <h2>Кто вы?</h2>
+    <div class="grid">
+      <article class="card role-card"><h3>💼 Я фрилансер</h3><p>Создайте профиль, укажите специализацию и откликайтесь на заказы.</p><button data-role="freelancer" class="registerRole">Регистрация фрилансера</button></article>
+      <article class="card role-card"><h3>📋 Я заказчик</h3><p>Опубликуйте задачу и найдите подходящего исполнителя.</p><button data-role="customer" class="registerRole">Регистрация заказчика</button></article>
+    </div>
+  </section>
+
+  <section class="section panel hidden" id="authPanel">
+    <div class="row" style="justify-content:space-between"><h2 id="authTitle">Регистрация</h2><button class="secondary" id="closeAuth">Закрыть</button></div>
+    <div class="notice">Для настоящих аккаунтов сначала нужно подключить Supabase по инструкции в README. Пароли не сохраняются в браузере.</div>
+    <form id="authForm">
+      <div id="nameWrap"><label for="fullName">Имя</label><input id="fullName" autocomplete="name" required></div>
+      <label for="email">Email</label><input id="email" type="email" autocomplete="email" required>
+      <label for="password">Пароль</label><input id="password" type="password" minlength="8" autocomplete="current-password" required>
+      <div id="roleWrap"><label for="role">Тип аккаунта</label><select id="role"><option value="freelancer">Фрилансер</option><option value="customer">Заказчик</option></select></div>
+      <div id="specialtyWrap"><label for="specialty">Специализация (для фрилансера)</label><input id="specialty" placeholder="Например: дизайн, тексты, сайты"></div>
+      <button type="submit" id="authSubmit">Создать аккаунт</button>
+      <button type="button" class="secondary" id="switchAuth">Уже есть аккаунт? Войти</button>
+    </form>
+    <p id="authMessage" aria-live="polite"></p>
+  </section>
+
+  <section class="section panel hidden" id="dashboard">
+    <div class="row" style="justify-content:space-between"><h2>Личный кабинет</h2><button class="secondary" id="logout">Выйти</button></div>
+    <p id="welcome"></p>
+    <div id="customerTools" class="hidden">
+      <h3>Разместить заказ</h3>
+      <form id="orderForm">
+        <label for="orderTitle">Название заказа</label><input id="orderTitle" required maxlength="100">
+        <label for="orderDescription">Описание</label><textarea id="orderDescription" required maxlength="2000"></textarea>
+        <div class="form-grid"><div><label for="orderCategory">Категория</label><select id="orderCategory"><option>Дизайн</option><option>Тексты</option><option>Разработка</option><option>Социальные сети</option><option>Другое</option></select></div><div><label for="orderBudget">Бюджет (сум)</label><input id="orderBudget" type="number" min="1" required></div></div>
+        <button type="submit">Опубликовать заказ</button>
+      </form>
+    </div>
+    <div id="freelancerTools" class="hidden"><h3>Мой профиль</h3><p id="mySpecialty"></p><p class="muted">После настройки базы данных здесь появятся ваши отклики и история работы.</p></div>
+  </section>
+
+  <section class="section" id="orders">
+    <div class="row" style="justify-content:space-between"><h2>Свежие заказы</h2><button class="secondary" id="refreshOrders">Обновить</button></div>
+    <div id="ordersList" class="grid"><div class="card muted">Заказы появятся после подключения базы данных и публикации заказчиками.</div></div>
+  </section>
+
+  <section class="section" id="about">
+    <h2>Как работает платформа</h2>
+    <div class="grid">
+      <div class="card"><h3>1. Регистрация</h3><p>Фрилансер и заказчик создают разные типы аккаунтов.</p></div>
+      <div class="card"><h3>2. Работа</h3><p>Заказчик размещает задачу, фрилансер находит её и связывается с заказчиком.</p></div>
+      <div class="card"><h3>3. Оплата</h3><p>Платёжный модуль подключается отдельно после выбора провайдера и проверки условий выплат.</p></div>
+    </div>
+    <div class="notice">Важно: сейчас это подготовленная версия интерфейса. Реальная регистрация, хранение заказов и платежи начнут работать после подключения серверной части. Не принимайте оплату через эту страницу до подключения и тестирования платёжного провайдера.</div>
+  </section>
+</main>
+<div id="cat">
+  <div class="cat-panel hidden" id="catPanel"><p><strong>Мяу! Я кот-помощник 🐾</strong></p><p>Я помогу разобраться. Что вы хотите сделать?</p><div class="row"><button class="secondary catHelp" data-help="register">Регистрация</button><button class="secondary catHelp" data-help="orders">Найти заказ</button><button class="secondary catHelp" data-help="payment">Оплата</button></div><p id="catAnswer" class="muted"></p></div>
+  <button class="cat-button" id="catToggle" aria-label="Открыть кота-помощника">🐈</button>
 </div>
-<section id="roles">
-  <h2>Добро пожаловать на Улов заказов!</h2>
+<footer>© 2026 Улов заказов. Фриланс-биржа.</footer>
 
-  <div class="grid">
-    <div class="card">
-      <h3>💼 Я фрилансер</h3>
-      <p>Ищи заказы и зарабатывай!</p>
-      <button onclick="document.getElementById('freelancer').scrollIntoView({behavior:'smooth'})">Войти фрилансеру</button>
-    </div>
-
-    <div class="card">
-      <h3>📋 Я заказчик</h3>
-      <p>Размещай заказы и находи исполнителей!</p>
-      <button onclick="document.getElementById('customer').scrollIntoView({behavior:'smooth'})">Войти заказчику</button>
-    </div>
-
-    <div class="card">
-      <h3>🐱 Кот-помощник</h3>
-      <p>Я помогу разобраться с платформой!</p>
-      <button onclick="alert('Привет! Я кот-помощник Улов заказов! Чем могу помочь?')">Позвать котика</button>
-    </div>
-  </div>
-</section>
-<section id="freelancer">
-  <h2>💼 Регистрация фрилансера</h2>
-  <div class="card">
-    <input type="text" placeholder="Ваше имя">
-    <input type="email" placeholder="Ваш Email">
-    <input type="text" placeholder="Ваша специализация">
-    <button onclick="alert('Анкета фрилансера подготовлена!')">Зарегистрироваться</button>
-  </div>
-</section>
-
-<section id="customer">
-  <h2>📋 Регистрация заказчика</h2>
-  <div class="card">
-    <input type="text" placeholder="Ваше имя">
-    <input type="email" placeholder="Ваш Email">
-    <textarea placeholder="Какой специалист вам нужен?"></textarea>
-    <button onclick="alert('Анкета заказчика подготовлена!')">Зарегистрироваться</button>
-  </div>
-</section>
-  <section id="categories">
-  <h2>Выбери свою специализацию</h2>
-  <div class="grid">
-    <div class="card"><h3>🎨 Дизайн</h3><p>Логотипы, баннеры, оформление</p></div>
-    <div class="card"><h3>✍️ Тексты</h3><p>Статьи, переводы, описания</p></div>
-    <div class="card"><h3>💻 Разработка</h3><p>Сайты, приложения, программирование</p></div>
-    <div class="card"><h3>📱 Социальные сети</h3><p>Контент, публикации, продвижение</p></div>
-  </div>
-</section>
-
-<section id="orders">
-  <h2>Примеры заказов</h2>
-  <div class="grid" id="orderList">
-    <div class="card order"><h3>Создать логотип для магазина</h3><p>Нужен современный логотип для небольшого бизнеса.</p><p class="price">300 000 сум</p><p class="muted">Дизайн</p></div>
-    <div class="card order"><h3>Оформить страницу Instagram</h3><p>Подготовить обложки и несколько публикаций.</p><p class="price">250 000 сум</p><p class="muted">Социальные сети</p></div>
-    <div class="card order"><h3>Создать простой сайт</h3><p>Одностраничный сайт для специалиста.</p><p class="price">800 000 сум</p><p class="muted">Разработка</p></div>
-  </div>
-  <p id="noResults" style="display:none">По вашему запросу ничего не найдено.</p>
-</section>
-
-<div class="cta" id="about">
-  <h2>Твой следующий заказ уже рядом</h2>
-  <p>Развивай навыки, находи клиентов и зарабатывай на любимом деле.</p>
-  <button onclick="document.getElementById('orders').scrollIntoView({behavior:'smooth'})">Смотреть заказы</button>
-</div>
-
-<footer>© 2026 Улов заказов. Фриланс-платформа.</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function searchOrders(){
-  const query=document.getElementById('searchInput').value.toLowerCase().trim();
-  const orders=document.querySelectorAll('.order');
-  let found=0;
-  orders.forEach(order=>{
-    const match=order.textContent.toLowerCase().includes(query);
-    order.style.display=match?'':'none';
-    if(match)found++;
-  });
-  document.getElementById('noResults').style.display=found?'none':'block';
-  document.getElementById('orders').scrollIntoView({behavior:'smooth'});
+/*
+  НАСТРОЙКА: вставьте URL и anon key вашего проекта Supabase.
+  Не вставляйте сюда service_role key или пароли платёжных систем.
+*/
+const SUPABASE_URL = "PASTE_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && !SUPABASE_ANON_KEY.includes("PASTE_");
+const db = configured && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+let authMode = "signup";
+let selectedRole = "freelancer";
+let currentProfile = null;
+
+const $ = id => document.getElementById(id);
+function message(text, type="") { const el=$("authMessage"); el.textContent=text; el.className=type; }
+function openAuth(mode="signup", role="freelancer") {
+  authMode=mode; selectedRole=role;
+  $("authPanel").classList.remove("hidden");
+  $("authTitle").textContent=mode==="signup"?"Регистрация":"Вход";
+  $("nameWrap").classList.toggle("hidden",mode==="login");
+  $("roleWrap").classList.toggle("hidden",mode==="login");
+  $("specialtyWrap").classList.toggle("hidden",mode==="login");
+  $("authSubmit").textContent=mode==="signup"?"Создать аккаунт":"Войти";
+  $("switchAuth").textContent=mode==="signup"?"Уже есть аккаунт? Войти":"Нет аккаунта? Зарегистрироваться";
+  $("role").value=role; message("");
+  $("authPanel").scrollIntoView({behavior:"smooth"});
 }
-document.getElementById('searchInput').addEventListener('keydown',e=>{
-  if(e.key==='Enter')searchOrders();
+function needBackend() { if(!db){message("Сначала подключим Supabase: откройте README и выполните шаги настройки. Пока аккаунты не создаются.", "error");return false;} return true; }
+
+document.querySelectorAll(".registerRole").forEach(b=>b.addEventListener("click",()=>openAuth("signup",b.dataset.role)));
+$("registerNav").onclick=()=>openAuth("signup","freelancer");
+$("loginNav").onclick=()=>openAuth("login");
+$("closeAuth").onclick=()=>$("authPanel").classList.add("hidden");
+$("switchAuth").onclick=()=>openAuth(authMode==="signup"?"login":"signup",selectedRole);
+$("authForm").addEventListener("submit",async e=>{
+  e.preventDefault(); if(!needBackend()) return;
+  const email=$("email").value.trim(), password=$("password").value;
+  try{
+    if(authMode==="signup"){
+      const role=$("role").value, full_name=$("fullName").value.trim(), specialty=$("specialty").value.trim();
+      const {data,error}=await db.auth.signUp({email,password,options:{data:{full_name,role}}});
+      if(error) throw error;
+      if(data.user){
+        const {error:profileError}=await db.from("profiles").upsert({id:data.user.id,email,full_name,role,specialty});
+        if(profileError) throw profileError;
+      }
+      message("Регистрация отправлена. Если включено подтверждение email, проверьте почту.", "success");
+    }else{
+      const {data,error}=await db.auth.signInWithPassword({email,password}); if(error) throw error;
+      await loadProfile(data.user); $("authPanel").classList.add("hidden");
+    }
+  }catch(err){message(err.message||"Не удалось выполнить запрос. Проверьте настройки и повторите.", "error");}
 });
+async function loadProfile(user){
+  const {data,error}=await db.from("profiles").select("*").eq("id",user.id).single();
+  if(error) throw error; currentProfile=data;
+  $("dashboard").classList.remove("hidden"); $("welcome").textContent=`Здравствуйте, ${data.full_name||data.email}!`;
+  $("customerTools").classList.toggle("hidden",data.role!=="customer");
+  $("freelancerTools").classList.toggle("hidden",data.role!=="freelancer");
+  $("mySpecialty").textContent="Специализация: "+(data.specialty||"не указана");
+  await loadOrders(); $("dashboard").scrollIntoView({behavior:"smooth"});
+}
+async function loadOrders(){
+  if(!db){$("ordersList").innerHTML='<div class="card muted">Подключите Supabase, чтобы загружать реальные заказы.</div>';return;}
+  const {data,error}=await db.from("orders").select("id,title,description,category,budget,currency,created_at").eq("status","open").order("created_at",{ascending:false}).limit(50);
+  if(error){$("ordersList").textContent=error.message;return;}
+  $("ordersList").innerHTML="";
+  if(!data.length){$("ordersList").innerHTML='<div class="card muted">Пока заказов нет. Заказчики могут добавить первый заказ после входа.</div>';return;}
+  data.forEach(o=>{
+    const el=document.createElement("article");el.className="card order";
+    const title=document.createElement("h3");title.textContent=o.title;
+    const desc=document.createElement("p");desc.textContent=o.description;
+    const cat=document.createElement("span");cat.className="pill";cat.textContent=o.category;
+    const price=document.createElement("p");price.className="price";price.textContent=Number(o.budget).toLocaleString("ru-RU")+" "+(o.currency||"UZS");
+    el.append(title,desc,cat,price);$("ordersList").append(el);
+  });
+}
+$("orderForm").addEventListener("submit",async e=>{
+  e.preventDefault(); if(!db||!currentProfile)return;
+  const payload={customer_id:currentProfile.id,title:$("orderTitle").value.trim(),description:$("orderDescription").value.trim(),category:$("orderCategory").value,budget:Number($("orderBudget").value),currency:"UZS",status:"open"};
+  const {error}=await db.from("orders").insert(payload);
+  if(error){alert("Не удалось опубликовать заказ: "+error.message);return;}
+  e.target.reset();alert("Заказ опубликован.");await loadOrders();
+});
+$("logout").onclick=async()=>{if(db)await db.auth.signOut();currentProfile=null;$("dashboard").classList.add("hidden");};
+$("refreshOrders").onclick=loadOrders;
+$("catToggle").onclick=()=>$("catPanel").classList.toggle("hidden");
+document.querySelectorAll(".catHelp").forEach(b=>b.onclick=()=>{
+ const answers={register:"Выберите «Я фрилансер» или «Я заказчик», затем заполните форму регистрации. Для настоящего аккаунта нужно подключить базу данных.",orders:"Откройте раздел «Свежие заказы». После подключения базы здесь будут показываться опубликованные задания.",payment:"Платёжный модуль ещё не подключён. Не отправляйте деньги через сайт, пока не будет настроен и проверен официальный провайдер."};
+ $("catAnswer").textContent=answers[b.dataset.help];
+});
+(async()=>{
+ if(!db){$("ordersList").innerHTML='<div class="card muted">Демо-интерфейс готов. Для регистрации и заказов подключите Supabase по инструкции в README.</div>';return;}
+ const {data:{session}}=await db.auth.getSession(); if(session)try{await loadProfile(session.user);}catch(e){console.error(e);}
+ await loadOrders();
+})();
 </script>
 </body>
 </html>
