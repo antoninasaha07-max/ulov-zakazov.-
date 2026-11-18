@@ -1,5 +1,5 @@
 =<!doctype html>
-<html lang="ru">
+<html lang="ru">=а
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,6 +36,7 @@ footer{text-align:center;padding:28px;color:var(--muted)}
 }
 
 #cat .cat-panel {
+ 
   width: min(360px, calc(100vw - 32px));
   padding: 20px;
   border: 2px solid #b9a5ed;
@@ -154,7 +155,62 @@ footer{text-align:center;padding:28px;color:var(--muted)}
   </section>
 </main>
 <div id="cat">
-  <div class="cat-panel hidden" id="catPanel"><p><strong>Мяу! Я кот-помощник 🐾</strong></p><p>Я помогу разобраться. Что вы хотите сделать?</p><div class="row"><button class="secondary catHelp" data-help="register">Регистрация</button><button class="secondary catHelp" data-help="orders">Найти заказ</button><button class="secondary catHelp" data-help="payment">Оплата</button></div><p id="catAnswer" class="muted"></p></div>
+  <div class="cat-panel hidden" id="catPanel"><p><strong>/* НОВОЕ ОФОРМЛЕНИЕ ЛОВЧИКА */
+#cat {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}
+
+#cat .cat-panel {
+  width: min(360px, calc(100vw - 32px));
+  padding: 20px;
+  border: 2px solid #b9a5ed;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #f4efff, #e8f5ff);
+  color: #26364a;
+  box-shadow: 0 8px 30px rgba(60, 50, 110, 0.2);
+  line-height: 1.5;
+}
+
+#cat .cat-panel strong {
+  color: #6546a5;
+  font-size: 18px;
+}
+
+#cat .cat-panel button {
+  border: 1px solid #b9a5ed;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 4px;
+  background: #ffffff;
+  color: #44346e;
+  cursor: pointer;
+}
+
+#cat .cat-panel button:hover {
+  background: #e1d8ff;
+}
+
+#cat .cat-button {
+  border: 0;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background: #20a9a5;
+  color: white;
+  font-size: 25px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  #cat {
+    right: 12px;
+    bottom: 12px;
+  }
+} 🐾</strong></p><p>Я помогу разобраться. Что вы хотите сделать?</p><div class="row"><button class="secondary catHelp" data-help="register">Регистрация</button><button class="secondary catHelp" data-help="orders">Найти заказ</button><button class="secondary catHelp" data-help="payment">Оплата</button></div><p id="catAnswer" class="muted"></p></div>
   <button class="cat-button" id="catToggle" aria-label="Открыть кота-помощника">🐈</button>
 </div>
 <footer>© 2026 Улов заказов. Фриланс-биржа.</footer>
