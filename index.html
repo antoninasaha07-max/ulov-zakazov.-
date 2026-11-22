@@ -166,8 +166,16 @@ footer{text-align:center;padding:28px;color:var(--muted)}
     <div class="notice">Важно: сейчас это подготовленная версия интерфейса. Реальная регистрация, хранение заказов и платежи начнут работать после подключения серверной части. Не принимайте оплату через эту страницу до подключения и тестирования платёжного провайдера.</div>
   </section>
 </main>
-<div id="cat">
-  <div class="cat-panel hidden" id="catPanel"><p><strong>>Найти заказ</button><button class="secondary catHelp" data-help="payment">Оплата</button></div><p id="catAnswer" class="muted"></p></div>
+<div id="cat"><div class="cat-panel hidden" id="catPanel">
+    <p><strong>Привет! Я Ловчик! 🐾</strong></p>
+    <p>Я помогу разобраться. Что вы хотите сделать?</p>
+    <div class="row">
+      <button class="secondary catHelp" data-help="register">Регистрация</button>
+      <button class="secondary catHelp" data-help="orders">Найти заказ</button>
+      <button class="secondary catHelp" data-help="payment">Оплата</button>
+    </div>
+    <p id="catAnswer" class="muted"></p>
+  </div>=
   <button class="cat-button" id="catToggle" aria-label="Открыть кота-помощника">🐈</button>
 </div>
 <footer>© 2026 Улов заказов. Фриланс-биржа.</footer>
