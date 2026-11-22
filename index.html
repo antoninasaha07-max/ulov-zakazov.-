@@ -223,8 +223,8 @@ $("authForm").addEventListener("submit",async e=>{
       const role=$("role").value, full_name=$("fullName").value.trim(), specialty=$("specialty").value.trim();
       const {data,error}=await db.auth.signUp({email,password,options:{data:{full_name,role}}});
       if(error) throw error;
-      if(data.user){
-     const {error:profileError}=await db.from("profiles").upsert({id:data.user.id,email,full_name,role,specialty,fish_balance:3}); 
+      if(data.user){ c
+const {error:profileError}=await db.from("profiles").upsert({id:data.user.id,email,full_name,role,specialty,fish_balance: role === "freelancer" ? 3 : 0}); 
         if(profileError) throw profileError;
       }
       message("Регистрация отправлена. Если включено подтверждение email, проверьте почту.", "success");
