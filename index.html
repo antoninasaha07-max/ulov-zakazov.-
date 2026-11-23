@@ -253,7 +253,7 @@ $("fishCount").textContent = data.fish_balance ?? 0;  $("dashboard").classList.r
 async function loadOrders(){
   if(!db){$("ordersList").innerHTML='<div class="card muted">Подключите Supabase, чтобы загружать реальные заказы.</div>';return;}
   const {data,error}=await db.from("orders").select("id,title,description,category,budget,currency,created_at").eq("status","open").order("created_at",{ascending:false}).limit(50);
-  if(error){$("ordersList").textContent=error.message;return;}
+if(error){$("ordersList").textContent=error.message;return;}
   $("ordersList").innerHTML="";
   if(!data.length){$("ordersList").innerHTML='<div class="card muted">Пока заказов нет. Заказчики могут добавить первый заказ после входа.</div>';return;}
   data.forEach(o=>{
