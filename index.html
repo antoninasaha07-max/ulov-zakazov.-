@@ -244,7 +244,7 @@ $("authForm").addEventListener("submit",async e=>{
 async function loadProfile(user){
   const {data,error}=await db.from("profiles").select("*").eq("id",user.id).single();
   if(error) throw error; currentProfile=data;
-  $("dashboard").classList.remove("hidden"); $("welcome").textContent=`Здравствуйте, ${data.full_name||data.email}!`;
+$("fishCount").textContent = data.fish_balance ?? 0;  $("dashboard").classList.remove("hidden"); $("welcome").textContent=`Здравствуйте, ${data.full_name||data.email}!`;
   $("customerTools").classList.toggle("hidden",data.role!=="customer");
   $("freelancerTools").classList.toggle("hidden",data.role!=="freelancer");
   $("mySpecialty").textContent="Специализация: "+(data.specialty||"не указана");
