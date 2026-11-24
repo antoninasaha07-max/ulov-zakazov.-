@@ -262,7 +262,7 @@ if(error){$("ordersList").textContent=error.message;return;}
     const desc=document.createElement("p");desc.textContent=o.description;
     const cat=document.createElement("span");cat.className="pill";cat.textContent=o.category;
     const price=document.createElement("p");price.className="price";price.textContent=Number(o.budget).toLocaleString("ru-RU")+" "+(o.currency||"UZS");
-    el.append(title,desc,cat,price);$("ordersList").append(el);
+  el.append(title,desc,cat,price);$("ordersList").append(el);
   });
 }
 $("orderForm").addEventListener("submit",async e=>{
