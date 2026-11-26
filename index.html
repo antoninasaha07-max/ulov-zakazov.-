@@ -1,4 +1,4 @@
-<!doctype html>
+=<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -241,28 +241,109 @@ $("authForm").addEventListener("submit",async e=>{
     }
   }catch(err){message(err.message||"Не удалось выполнить запрос. Проверьте настройки и повторите.", "error");}
 });
-async function loadProfile(user){
-  const {data,error}=await db.from("profiles").select("*").eq("id",user.id).single();
-  if(error) throw error; currentProfile=data;
-$("fishCount").textContent = data.fish_balance ?? 0;  $("dashboard").classList.remove("hidden"); $("welcome").textContent=`Здравствуйте, ${data.full_name||data.email}!`;
-  $("customerTools").classList.toggle("hidden",data.role!=="customer");
-  $("freelancerTools").classList.toggle("hidden",data.role!=="freelancer");
-  $("mySpecialty").textContent="Специализация: "+(data.specialty||"не указана");
-  await loadOrders(); $("dashboard").scrollIntoView({behavior:"smooth"});
-}
 async function loadOrders(){
-  if(!db){$("ordersList").innerHTML='<div class="card muted">Подключите Supabase, чтобы загружать реальные заказы.</div>';return;}
-  const {data,error}=await db.from("orders").select("id,title,description,category,budget,currency,created_at").eq("status","open").order("created_at",{ascending:false}).limit(50);
-if(error){$("ordersList").textContent=error.message;return;}
-  $("ordersList").innerHTML="";
-  if(!data.length){$("ordersList").innerHTML='<div class="card muted">Пока заказов нет. Заказчики могут добавить первый заказ после входа.</div>';return;}
+  if(!db){
+    $("ordersList").innerHTML =
+      '<div class="card muted">Подключите Supabase.</div>';
+    return;
+  }
+
+  const {data,error} = await db.from("orders")
+    .select("id,title,description,category,budget,currency,created_at")
+    .eq("status","open")
+    .order("created_at",{ascending:false})
+    .limit(50);
+
+  if(error){
+    $("ordersList").textContent = error.message;
+    return;
+  }
+
+  $("ordersList").innerHTML = "";
+
+  if(!data || !data.length){
+    $("ordersList").innerHTML =
+      '<div class="card muted">Пока заказов нет.</div>';
+    return;
+  }
+
   data.forEach(o=>{
-    const el=document.createElement("article");el.className="card order";
-    const title=document.createElement("h3");title.textContent=o.title;
-    const desc=document.createElement("p");desc.textContent=o.description;
-    const cat=document.createElement("span");cat.className="pill";cat.textContent=o.category;
-    const price=document.createElement("p");price.className="price";price.textContent=Number(o.budget).toLocaleString("ru-RU")+" "+(o.currency||"UZS");
-  el.append(title,desc,cat,price);$("ordersList").append(el);
+    const el = document.createElement("article");
+    el.className = "card order";
+
+    const title = document.createElement("h3");
+    title.textContent = o.title;
+
+    const desc = document.createElement("p");
+    desc.textContent = o.description;
+
+    const cat = document.createElement("span");
+    cat.className = "pill";
+    cat.textContent = o.category || "Другое";
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent =
+      Number(o.budget).toLocaleString("ru-RU") +
+      " " + (o.currency || "UZS");
+
+    el.append(title,desc,cat,price);
+
+    if(currentProfile && currentProfile.role === "freelancer"){
+      const btn = document.createElement("button");
+      btn.textContent = "🐟 Откликнуться";
+
+      const status = document.createElement("p");
+      status.className = "muted";
+
+      btn.onclick = ()=>applyToOrder(o.id,btn,status);
+
+      el.append(btn,status);
+    } else if(!currentProfile){
+      const btn = document.createElement("button");
+      btn.textContent = "Войти для отклика";
+      btn.onclick = ()=>openAuth("login");
+      el.append(btn);
+    }
+
+    $("ordersList").append(el);
+  });
+}
+
+async function applyToOrder(orderId,button,status){
+  if(!db || !currentProfile) return;
+
+  button.disabled = true;
+  button.textContent = "Отправляем...";
+
+  try{
+    const {data,error} = await db.rpc(
+      "apply_to_order",
+      {p_order_id:orderId}
+    );
+
+    if(error) throw error;
+
+    const result = Array.isArray(data) ? data[0] : data;
+
+    if(!result || !result.success){
+      throw new Error(result?.message || "Ошибка отклика");
+    }
+
+    currentProfile.fish_balance = result.fish_balance;
+    $("fishCount").textContent = result.fish_balance;
+
+    button.textContent = "✓ Отклик отправлен";
+    status.className = "notice success";
+    status.textContent = "Отклик успешно отправлен!";
+
+  }catch(err){
+    button.disabled = false;
+    button.textContent = "🐟 Откликнуться";
+    status.className = "notice error";
+    status.textContent = err.message;
+  }
+}
   });
 }
 $("orderForm").addEventListener("submit",async e=>{
