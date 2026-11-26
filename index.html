@@ -344,8 +344,7 @@ async function applyToOrder(orderId,button,status){
     status.textContent = err.message;
   }
 }
-  });
-}
+
 $("orderForm").addEventListener("submit",async e=>{
   e.preventDefault(); if(!db||!currentProfile)return;
   const payload={customer_id:currentProfile.id,title:$("orderTitle").value.trim(),description:$("orderDescription").value.trim(),category:$("orderCategory").value,budget:Number($("orderBudget").value),currency:"UZS",status:"open"};
